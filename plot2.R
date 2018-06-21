@@ -1,0 +1,10 @@
+ powertable<-read.table("household_power_consumption.txt",skip=1,sep=";")
+ names(powertable) <- c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
+  powertable2 <- subset(powertable,powertable$Date %in% c("1/2/2007" ,"2/2/2007"))
+   powertable2$Date<-as.Date(powertable2$Date , format="%d/%m/%Y")
+datetime <- paste( powertable2$Date,powertable2$Time)
+powertable2$Datetime <- as.POSIXct(datetime)
+with (powertable2,plot(Datetime,as.numeric(as.character(Global_active_power)), type="l", xlab="",ylab="Global Active Power (kilowatts)"))
+
+ dev.copy(png,file="plot2.png",width=480,height=480)
+ dev.off
